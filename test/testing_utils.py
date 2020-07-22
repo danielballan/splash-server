@@ -35,8 +35,6 @@ def generic_test_flask_crud(sample_new_object, url_path, client, mongodb):
             response = client.post(url_path,
                                    data=json.dumps(sample_new_object),
                                    content_type='application/json')
-            request = request_context.request
-            print("!!!!!!!!!" + repr(response))
             assert response.status_code == 200
 
             response_dict = response.get_json()

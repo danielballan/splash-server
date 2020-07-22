@@ -16,6 +16,7 @@ def test_flask_crud_user(splash_client, mongodb):
 
 
 new_user = {
+    "name": "Zaphod Beeblebrox",
     "groups": ["legends", "cannibals"],
     "authenticators": [
         {"issuer": "accounts.google.com",
