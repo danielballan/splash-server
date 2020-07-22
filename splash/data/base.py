@@ -86,6 +86,7 @@ class MongoCollectionDao(Dao):
     def __init__(self, db, collection_name):
         self._db = db
         self._collection = db[collection_name]
+        self._collection_setup()
        
     def create(self, doc):
         logging.debug(f"create doc in collection {0}, doc: {1}", self._collection, doc)
@@ -128,6 +129,22 @@ class MongoCollectionDao(Dao):
         status = self._collection.delete_one({"uid": uid})
         if status.deleted_count == 0:
             raise ObjectNotFoundError
+
+    def _collection_setup(self):
+        """ Called on init to let subclasses perform collection based setup
+            like creating indexes or adding mongo-level schema validation
+
+            For example, a subclass can implement this in order to create indexes
+            if they don't yet exist:
+
+
+                 self._collection_tag_sets.create_index([
+                    ('field1', 1),
+                    ('subdoc.field2', 1),
+                ])
+        """
+        pass
+
 
 class ObjectNotFoundError(Exception):
     pass
